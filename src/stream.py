@@ -1,28 +1,54 @@
 import streamlit as st
 import requests
 
-# Configuración de página
-st.set_page_config(page_title="🚀 Chatbot de Productividad", layout="centered", page_icon="💼")
+# 🔹 Configuración de página con fondo oscuro y texto claro
+st.set_page_config(page_title="🚀 Echo: Futuro Tecnológico", layout="centered", page_icon="🤖")
 
-# Estilo con colores y estructura
-st.title("💼 Asistente de Productividad con Gemini")
-st.write("Optimiza tu trabajo con IA. Escribe una consulta y obtén respuestas estructuradas.")
+# 🔹 Aplicar fondo oscuro correctamente
+st.markdown(
+    """
+    <style>
+    body {
+        background-color: #121212;
+        color: white;
+    }
+    .respuesta {
+        border-radius: 10px;
+        padding: 15px;
+        background-color: #262626;
+        color: white;
+        font-size: 18px;
+    }
+    div.stButton > button {
+        display: block;
+        margin: auto;
+        background-color: #00C6FF;
+        color: white;
+        border-radius: 10px;
+        font-size: 18px;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-# Entrada de texto con icono
-prompt = st.text_input("✍️ Escribe tu consulta:", placeholder="Ejemplo: Redacta un email profesional...")
+# 🔹 Logo futurista (Asegúrate de tener `logo.png` en tu carpeta)
+st.image("logo.png", width=150)
 
-# Botón con animación
-if st.button("🚀 Generar respuesta"):
-    response = requests.get("http://127.0.0.1:8000/chat", params={"prompt": prompt})
-    
-    # Respuesta con mejor formato
-    st.markdown("### 💡 Respuesta:")
-    st.markdown(f"📌 **{response.json()['response']}**", unsafe_allow_html=True)
-    
-    # Línea divisoria
+st.markdown("<h1 style='text-align:center; color:#00C6FF;'>🤖 Echo: Chatbot de Tecnologías Futuras</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center;'>Explora los avances en IA, robótica, computación cuántica y más.</p>", unsafe_allow_html=True)
+
+# 🔹 Entrada de texto mejorada
+prompt = st.text_input("✍️ Escribe tu consulta sobre tecnología:", placeholder="Ejemplo: ¿Cómo será la IA en 2050?")
+
+# 🔹 Botón centrado y mejorado
+if st.button("🚀 Obtener información"):
+    response = requests.get("http://127.0.0.1:8000/chat", params={"usuario": "Cristian", "prompt": prompt})
+
+    # 🔹 Respuesta estilizada con fondo oscuro y texto visible
+    st.markdown("<div class='respuesta'><strong>" + response.json()['response'] + "</strong></div>", unsafe_allow_html=True)
+
     st.divider()
-    
-    # Sección adicional para mejorar presentación
-    st.write("⚡ _¿Quieres más opciones de automatización? Escribe una tarea y prueba._")
-
-
