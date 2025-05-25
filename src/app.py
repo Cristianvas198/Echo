@@ -3,6 +3,7 @@ import os
 from fastapi import FastAPI
 import google.generativeai as genai
 from dotenv import load_dotenv
+from datetime import datetime
 
 # 🔹 1. Crear la base de datos y la tabla si no existen
 conn = sqlite3.connect("chatbot.db")
@@ -23,20 +24,21 @@ def guardar_conversacion(usuario, pregunta, respuesta):
     conn = sqlite3.connect("chatbot.db")
     cursor = conn.cursor()
     
-    cursor.execute("INSERT INTO conversaciones (usuario, pregunta, respuesta) VALUES (?, ?, ?)", 
-                   (usuario, pregunta, respuesta))
+    cursor.execute("INSERT INTO conversaciones (usuario, pregunta, respuesta, fecha) VALUES (?, ?, ?, ?)", 
+                   (usuario, pregunta, respuesta, datetime.now()))
     
     conn.commit()
     conn.close()
 
-def obtener_respuesta_previa(pregunta):
+def obtener_respuesta_previa(usuario, pregunta):
     conn = sqlite3.connect("chatbot.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT respuesta FROM conversaciones WHERE pregunta = ? ORDER BY fecha DESC LIMIT 1", (pregunta,))
+    cursor.execute("SELECT respuesta FROM conversaciones WHERE usuario = ? AND pregunta = ? ORDER BY fecha DESC LIMIT 1", (usuario, pregunta,))
     respuesta = cursor.fetchone()
     conn.close()
     
     return respuesta[0] if respuesta else None
+
 
 
 # Cargar las variables de entorno
