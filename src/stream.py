@@ -48,6 +48,7 @@ prompt = st.text_input("✍️ Escribe tu consulta sobre tecnología:", placehol
 if st.button("🚀 Obtener información"):
     response = requests.get("http://127.0.0.1:8000/chat", params={"usuario": "Cristian", "prompt": prompt})
 
+
     # 🔹 Respuesta estilizada con fondo oscuro y texto visible
     st.markdown("<div class='respuesta'><strong>" + response.json()['response'] + "</strong></div>", unsafe_allow_html=True)
 

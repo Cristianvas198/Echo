@@ -66,6 +66,7 @@ def chat(usuario: str, prompt: str):
 
     # 🔹 Optimización del Prompt
     contexto = f"""Eres Echo, un asistente experto en tecnologías futuras. Responde de forma clara y concisa.
+    Cada respuesta debe estar relacionada con tecnología, innovación y avances digitales, sin excepciones.
     Limita tu respuesta a un máximo de **3 párrafos cortos** y evita información innecesaria.
     Consulta: '{prompt}'"""
     
@@ -76,21 +77,13 @@ def chat(usuario: str, prompt: str):
 
     return {"response": response.text}
 
-
-
-
-
-@app.get("/email")
-def generate_email(subject: str, details: str):
-    prompt = f"""Genera un email profesional sobre '{subject}', incluyendo estos detalles: {details}. 
-    Usa un tono formal y estructurado."""
+@app.get("/historial")
+def obtener_historial(usuario: str):
+    conn = sqlite3.connect("chatbot.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT pregunta, respuesta, fecha FROM conversaciones WHERE usuario = ? ORDER BY fecha DESC", (usuario,))
+    historial = cursor.fetchall()
+    conn.close()
     
-    response = model.generate_content(prompt)
-    return {"email": response.text}
+    return {"historial": historial}
 
-@app.get("/resumen")
-def generate_summary(text: str):
-    prompt = f"""Resume el siguiente texto en 3 párrafos clave: {text}"""
-    
-    response = model.generate_content(prompt)
-    return {"summary": response.text}
