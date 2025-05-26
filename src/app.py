@@ -6,7 +6,10 @@ from dotenv import load_dotenv
 from datetime import datetime
 from fastapi.responses import JSONResponse
 
-# 🔹 1. Crear la base de datos y la tabla si no existen
+
+
+#--------------------Crear la base de datos y la tabla si no existen--------------------
+
 conn = sqlite3.connect("chatbot.db")
 cursor = conn.cursor()
 cursor.execute("""
@@ -41,34 +44,39 @@ def obtener_respuesta_previa(usuario, pregunta):
     
     return respuesta[0] if respuesta else None
 
-# Cargar las variables de entorno
+
+#-------------------------------------Configuración de Google Gemini--------------------------
+
+# Variables de entorno
 load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
 
-# Configurar el cliente de Gemini
+# Cliente de Gemini
 genai.configure(api_key=api_key)
 
 # Inicializar el modelo de Gemini
 model = genai.GenerativeModel("gemini-2.0-flash")
 
-# Crear la aplicación FastAPI
+
+#-------------------------------------Configuración de FastAPI---------------------------------
+
 app = FastAPI()
 
-@app.get("/")
+@app.get("/") # Ruta de bienvenida
 def landing():
     return {"message": "Bienvenido a la API de chat con Gemini"}
 
-@app.get("/chat")
+@app.get("/chat") # Ruta para el chat
 def chat(usuario: str, prompt: str):
     try:
-        # Buscar respuesta previa en la base de datos
+        # Buscar las respuestas previas en la base de datos
         respuesta_previa = obtener_respuesta_previa(usuario, prompt) 
 
 
         if respuesta_previa:
             return JSONResponse(content={"response": respuesta_previa})  # ✅ Si hay una respuesta guardada, la usamos
 
-        # 🔹 Optimización del Prompt
+        # Optimizar el prompt para el modelo
         contexto = f"""Eres Echo, un asistente experto en tecnologías futuras. Responde de forma clara y concisa.
         Cada respuesta debe estar relacionada con tecnología, innovación y avances digitales, sin excepciones.
         Limita tu respuesta a un máximo de **3 párrafos cortos** y evita información innecesaria.
@@ -87,7 +95,7 @@ def chat(usuario: str, prompt: str):
     except Exception as e:
         return JSONResponse(content={"response": f"⚠️ Error en la API: {str(e)}"})
 
-@app.get("/historial")
+@app.get("/historial") # Ruta para obtener el historial de conversaciones
 def obtener_historial(usuario: str):
     conn = sqlite3.connect("chatbot.db")
     cursor = conn.cursor()
