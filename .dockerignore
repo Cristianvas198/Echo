@@ -1,0 +1,9 @@
+# Ignora notebooks, entornos virtuales y archivos temporales
+notebooks/
+__pycache__/
+entorno_virtual/
+
+# Archivos de entorno
+*.env
+.gitignore
+.git
