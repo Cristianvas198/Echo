@@ -15,7 +15,7 @@ Echo es un asistente experto en tecnología e innovación, diseñado para respon
 
 ### 1️⃣ Clona el repositorio  
 ```bash
-git clone https://github.com/tu-usuario/echo-chatbot.git
+git clone https://github.com/Cristianvas198/Echo
 cd echo-chatbot
 ```
 
