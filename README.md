@@ -1,5 +1,5 @@
 
-![ECHO](docs/logo.png)
+![ECHO](docs/img/logo.png)
 
 # 🚀 Echo: Chatbot de Tecnologías Futuras
 
@@ -84,3 +84,4 @@ www.linkedin.com/in/cristiangvm98
 🚀 Apasionado por la tecnología y la innovación.  
 
 ---
+![diagrama](docs/img/diagrama.png)
