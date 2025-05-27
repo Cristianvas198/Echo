@@ -49,7 +49,7 @@ st.markdown(
 # 🔹 Centrar el logo y mejorar tamaño con ruta absoluta dentro del contenedor
 
 st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allow_html=True)
-st.image("/app/docs/logo.png", width=400)  # ✅ Agrandamos la imagen
+st.image("/app/docs/img/logo.png", width=400)  # ✅ Agrandamos la imagen
 st.markdown("</div>", unsafe_allow_html=True)
 
 
