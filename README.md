@@ -1,4 +1,6 @@
 
+![ECHO](docs/logo.png)
+
 # 🚀 Echo: Chatbot de Tecnologías Futuras
 
 Echo es un asistente experto en tecnología e innovación, diseñado para responder preguntas relacionadas con avances digitales y conceptos tecnológicos. Se basa en la API de **Google Gemini** y está implementado usando **FastAPI** y **Streamlit**.
